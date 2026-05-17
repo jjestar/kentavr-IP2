@@ -23,7 +23,7 @@ async def search_movie(query, language="ru-RU"):
         return None
     first_movie = results[0]
 
-        return await get_movie_details(first_movie["id"], language=language)
+    return await get_movie_details(first_movie["id"], language=language)
 
 
 async def get_movie_details(movie_id, language="ru-RU"):

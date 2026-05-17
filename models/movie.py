@@ -2,7 +2,7 @@ from models.media import Media
 class Movie(Media):
     def __init__(self, media_id, title, overview, release_date, rating, genres, poster_path):
         super().__init__(media_id, title, overview, release_date, rating)
-        self.genres = genres  # Список жанров
+        self.genres = genres
         self.poster_path = poster_path
 
     def get_poster_url(self):

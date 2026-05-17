@@ -3,7 +3,7 @@ import os
 from models.movie import Movie
 HISTORY_FILE = "data/history.json"
 FAVOURITES_FILE = "data/favorites.json"
-MAX_HISTORY = 20  # Ограничение истории
+MAX_HISTORY = 20
 def _load_file(filepath):
     if not os.path.exists(filepath):
         return {}
@@ -132,3 +132,39 @@ def get_favourites(user_id):
         movie_objects.append(obj)
 
     return movie_objects
+
+
+def clear_history(user_id):
+    data = _load_file(HISTORY_FILE)
+    uid = str(user_id)
+    data[uid] = []
+
+    _save_file(HISTORY_FILE, data)
+
+
+def is_favourite(user_id, movie_id):
+    data = _load_file(FAVOURITES_FILE)
+    uid = str(user_id)
+
+    if uid not in data:
+        return False
+
+    user_favs = data[uid]
+    for m in user_favs:
+        if m["id"] == movie_id:
+            return True
+
+    return False
+
+
+def is_in_history(user_id, movie_id):
+    data = _load_file(HISTORY_FILE)
+    uid = str(user_id)
+
+    if uid not in data:
+        return False
+
+    for m in data[uid]:
+        if m["id"] == movie_id:
+            return True
+    return False
