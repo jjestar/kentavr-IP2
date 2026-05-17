@@ -47,27 +47,25 @@ async def cmd_help(message: Message):
         "Click <b>🕓 History</b> you film history",
         parse_mode="HTML",
     )
-@router.message(F.text == "🔍 Поиск фильма")
+@router.message(F.text == "🔍 Search film")
 async def btn_search(message: Message):
     await message.answer("✏️ Enter film or anime name:")
 
 
-@router.message(F.text == "🔥 Популярные")
+@router.message(F.text == "🔥 Popular")
 async def btn_popular(message: Message):
     movies = await movie_api.get_popular_movies()
 
     if not movies:
         await message.answer("😕 Cannot load popular films.")
         return
-
-    # Собираем строки через генератор
     lines = list(format_movie_list(movies))
     text = "🔥 <b>Popular films right now:</b>\n\n" + "\n".join(lines)
 
     await message.answer(text, parse_mode="HTML")
 
 
-@router.message(F.text == "⭐ Favorite")
+@router.message(F.text == "⭐ Favourite")
 async def btn_favourites(message: Message):
     user_id = message.from_user.id
     movies = storage.get_favourites(user_id)
